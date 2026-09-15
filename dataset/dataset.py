@@ -7,12 +7,20 @@ def get_datasets(root="./data"):
     train_transform = transforms.Compose(
         [
             transforms.ToTensor(),
+            transforms.Normalize(
+                mean=(0.4914, 0.4822, 0.4465),
+                std=(0.2470, 0.2435, 0.2616),
+            ),
         ]
     )
 
     val_test_transform = transforms.Compose(
         [
             transforms.ToTensor(),
+            transforms.Normalize(
+                mean=(0.4914, 0.4822, 0.4465),
+                std=(0.2470, 0.2435, 0.2616),
+            ),
         ]
     )
 
