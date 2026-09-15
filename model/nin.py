@@ -20,7 +20,6 @@ class MLPConv(nn.Module):
             nn.Conv2d(out_channels1, out_channels2, 1),
             nn.ReLU(),
             nn.Conv2d(out_channels2, out_channels3, 1),
-            nn.ReLU(),
         )
 
     def forward(self, x):
@@ -42,7 +41,7 @@ class NIN(nn.Module):
 
         self.pool = nn.MaxPool2d(2)
         self.dropout = nn.Dropout(0.5)
-
+        self.relu = nn.ReLU()
         self.mlpconv2 = MLPConv(
             in_channels=64,
             out_channels1=128,
@@ -65,9 +64,11 @@ class NIN(nn.Module):
 
     def forward(self, x):
         x = self.mlpconv1(x)
+        x = self.relu(x)
         x = self.pool(x)
         x = self.dropout(x)
         x = self.mlpconv2(x)
+        x = self.relu(x)
         x = self.pool(x)
         x = self.dropout(x)
         x = self.mlpconv3(x)
