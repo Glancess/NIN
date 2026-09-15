@@ -1,0 +1,22 @@
+# Dataset
+data/
+
+# Model weights
+*.pth
+*.pt
+*.ckpt
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Virtual environment
+venv/
+.venv/
