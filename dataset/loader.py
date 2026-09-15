@@ -1,6 +1,6 @@
 from torch.utils.data import DataLoader
 
-from dataset import get_datasets
+from .dataset import get_datasets
 
 
 def get_loaders(batch_size=128):
