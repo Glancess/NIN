@@ -27,48 +27,27 @@ def main():
         weight_decay=config.WEIGHT_DECAY,
     )
 
-    for epoch in range(config.EPOCHS):
+    images, targets = next(iter(train_loader))
 
-        train_loss, train_top1, train_top5 = train_one_epoch(
-            model=model,
-            train_loader=train_loader,
-            criterion=criterion,
-            optimizer=optimizer,
-            device=device,
-            topk=config.TOPK,
-        )
+    images = images.to(device)
+    targets = targets.to(device)
 
-        val_loss, val_top1, val_top5 = evaluate(
-            model=model,
-            data_loader=val_loader,
-            criterion=criterion,
-            device=device,
-            topk=config.TOPK,
-        )
+    model.train()
 
-        print(
-            f"Epoch [{epoch + 1}/{config.EPOCHS}] "
-            f"Train Loss: {train_loss:.4f} "
-            f"Top1: {train_top1 * 100:.2f}% "
-            f"Top5: {train_top5 * 100:.2f}% | "
-            f"Val Loss: {val_loss:.4f} "
-            f"Top1: {val_top1 * 100:.2f}% "
-            f"Top5: {val_top5 * 100:.2f}%"
-        )
+    for i in range(200):
+        optimizer.zero_grad()
 
-    test_loss, test_top1, test_top5 = evaluate(
-        model=model,
-        data_loader=test_loader,
-        criterion=criterion,
-        device=device,
-        topk=config.TOPK,
-    )
+        outputs = model(images)
+        loss = criterion(outputs, targets)
 
-    print(
-        f"Test Loss: {test_loss:.4f} "
-        f"Top1: {test_top1 * 100:.2f}% "
-        f"Top5: {test_top5 * 100:.2f}%"
-    )
+        loss.backward()
+        optimizer.step()
+
+        if i % 10 == 0:
+            pred = outputs.argmax(dim=1)
+            acc = (pred == targets).float().mean()
+
+            print(i, "loss:", loss.item(), "acc:", acc.item())
 
 
 if __name__ == "__main__":
