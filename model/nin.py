@@ -27,16 +27,16 @@ class MLPConv(nn.Module):
 
 
 class NIN(nn.Module):
-    def __init__(self, num_classes=10):
+    def __init__(self, num_classes=10, kernel_size=3):
         super().__init__()
-
+        padding = kernel_size // 2
         self.mlpconv1 = MLPConv(
             in_channels=3,
             out_channels1=64,
             out_channels2=64,
             out_channels3=64,
-            kernel_size=3,
-            padding=1,
+            kernel_size=kernel_size,
+            padding=padding,
         )
 
         self.pool = nn.MaxPool2d(2)
@@ -47,8 +47,8 @@ class NIN(nn.Module):
             out_channels1=128,
             out_channels2=128,
             out_channels3=128,
-            kernel_size=3,
-            padding=1,
+            kernel_size=kernel_size,
+            padding=padding,
         )
 
         self.mlpconv3 = MLPConv(
@@ -56,8 +56,8 @@ class NIN(nn.Module):
             out_channels1=128,
             out_channels2=64,
             out_channels3=num_classes,
-            kernel_size=3,
-            padding=1,
+            kernel_size=kernel_size,
+            padding=padding,
         )
 
         self.gap = nn.AdaptiveAvgPool2d(1)
