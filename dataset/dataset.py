@@ -46,7 +46,7 @@ def get_datasets(root="./data"):
     train_indices = range(0, 40000)
     val_indices = range(40000, 50000)
 
-    train_set = Subset(train_dataset, train_indices)
+    train_set = train_dataset
     val_set = Subset(val_dataset, val_indices)
 
     # 官方 test

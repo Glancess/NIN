@@ -12,16 +12,10 @@ def get_loaders(batch_size=128):
         shuffle=True,
     )
 
-    val_loader = DataLoader(
-        val_set,
-        batch_size=batch_size,
-        shuffle=False,
-    )
-
     test_loader = DataLoader(
         test_set,
         batch_size=batch_size,
         shuffle=False,
     )
 
-    return train_loader, val_loader, test_loader
+    return train_loader, test_loader
